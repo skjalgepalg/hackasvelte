@@ -1,0 +1,223 @@
+{
+  "@context" : "https://frost.met.no/schema",
+  "@type" : "ObservationResponse",
+  "apiVersion" : "v0",
+  "license" : "https://creativecommons.org/licenses/by/3.0/no/",
+  "createdAt" : "2019-11-29T15:49:53Z",
+  "queryTime" : 0.463,
+  "currentItemCount" : 11,
+  "itemsPerPage" : 11,
+  "offset" : 0,
+  "totalItemCount" : 11,
+  "currentLink" : "https://frost.met.no/observations/v0.jsonld?sources=SN18700&referencetime=2019-01-01%2F2019-11-29&elements=mean(air_temperature%20P1M)%2Cmin(air_temperature%20P1M)%2Cmax(air_temperature%20P1M)&timeoffsets=PT0H",
+  "data" : [ {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-01-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : -2.8,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-02-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 0.5,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-03-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 2.3,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-04-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 8.7,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-05-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 10.4,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-06-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 15.4,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-07-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 17.9,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-08-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 16.8,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-09-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 11.4,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-10-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 5.4,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  }, {
+    "sourceId" : "SN18700:0",
+    "referenceTime" : "2019-11-01T00:00:00.000Z",
+    "observations" : [ {
+      "elementId" : "mean(air_temperature P1M)",
+      "value" : 1.4,
+      "unit" : "degC",
+      "level" : {
+        "levelType" : "height_above_ground",
+        "unit" : "m",
+        "value" : 2
+      },
+      "timeOffset" : "PT0H",
+      "timeResolution" : "P1M",
+      "timeSeriesId" : 0,
+      "performanceCategory" : "C",
+      "exposureCategory" : "2",
+      "qualityCode" : 2
+    } ]
+  } ]
+}
