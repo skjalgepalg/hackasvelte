@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   export let dataseries; // P1D, P1M
 
+  let yearRad = Math.PI * 1.5;
   let canvas;
   onMount(() => {
     const rad = canvas.width / 3;
@@ -54,17 +55,19 @@
     };
 
     const drawSeries = (ctx, series) => {
-      series.forEach(({ cpX, cpY, x2, y2, x0, y0, offset, offset2, radius }) => {
-        const relativeColor = 200 + offset;
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.moveTo(x0, y0);
-        ctx.quadraticCurveTo(cpX, cpY, x2, y2);
-        ctx.strokeStyle = `rgb(${relativeColor}, 78, 243)`;
-        ctx.stroke();
-        ctx.closePath();
-      });
-    }
+      series.forEach(
+        ({ cpX, cpY, x2, y2, x0, y0, offset, offset2, radius }) => {
+          const relativeColor = 200 + offset;
+          ctx.beginPath();
+          ctx.lineWidth = 2;
+          ctx.moveTo(x0, y0);
+          ctx.quadraticCurveTo(cpX, cpY, x2, y2);
+          ctx.strokeStyle = `rgb(${relativeColor}, 78, 243)`;
+          ctx.stroke();
+          ctx.closePath();
+        }
+      );
+    };
 
     // Prepare canvas
     const ctx = canvas.getContext("2d");
@@ -119,7 +122,16 @@
   <p>
     Viser lufttemperatur målt på Blindern
     <br />
-    Data fra <a href="https://frost.met.no" rel="noopener" target="_blank">frost.met.no</a>
+    Data fra
+    <a href="https://frost.met.no" rel="noopener" target="_blank">
+      frost.met.no
+    </a>
   </p>
+  <input
+    type="range"
+    min={0}
+    max={Math.PI * 2}
+    step={Math.PI / 4}
+    bind:value={yearRad} />
   <canvas bind:this={canvas} width="1000" height="1000" />
 </main>
