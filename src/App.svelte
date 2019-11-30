@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  export let name;
   export let dataseries; // P1D, P1M
 
   let canvas;
@@ -9,96 +8,86 @@
     const PI2 = Math.PI * 2;
     const cx = canvas.width / 2;
     const cy = canvas.width / 2;
-    const sideCount = dataseries.P1D.length;
-    const stepLength = PI2 / 365;
-    // const stepLength = PI2 / sideCount;
-    const xx = (a, offset) => cx + (rad + offset) * Math.cos(a);
-    const yy = (a, offset) => cy + (rad + offset) * Math.sin(a);
 
+    const sideCountP1D = dataseries.P1D.length;
+    const sideCountP1M = dataseries.P1M.length;
+    const stepLengthP1D = PI2 / 365;
+    const stepLengthP1M = PI2 / 12;
+
+    const xx = (a, offset, rad) => cx + (rad + offset * 2) * Math.cos(a);
+    const yy = (a, offset, rad) => cy + (rad + offset * 2) * Math.sin(a);
+
+    const getStepInfo = (step, stepLength, i, arr, arrKey, radius) => {
+      const t = (i - 1) * stepLength;
+      const t2 = i * stepLength;
+      const offset = i === 0 ? 0 : arr[i - 1][arrKey].value;
+      const offset2 = step[arrKey].value;
+      const x0 = xx(t, offset, radius);
+      const y0 = yy(t, offset, radius);
+      const x1 = xx((t + t2) / 2, offset, radius);
+      const y1 = yy((t + t2) / 2, offset, radius);
+      const x2 = xx(t2, offset2, radius);
+      const y2 = yy(t2, offset2, radius);
+
+      const cpX = 2 * x1 - x0 / 2 - x2 / 2;
+      const cpY = 2 * y1 - y0 / 2 - y2 / 2;
+
+      return { cpX, cpY, x2, y2, x0, y0, offset, offset2, radius };
+    };
+
+    const generateStepCoords = (dataseries, stepLength, radius) => {
+      const maxSeries = [];
+      const meanSeries = [];
+      const minSeries = [];
+
+      dataseries.forEach((step, i, arr) => {
+        maxSeries.push(getStepInfo(step, stepLength, i, arr, "max", radius));
+        meanSeries.push(getStepInfo(step, stepLength, i, arr, "mean", radius));
+        minSeries.push(getStepInfo(step, stepLength, i, arr, "min", radius));
+      });
+
+      return {
+        maxSeries,
+        meanSeries,
+        minSeries
+      };
+    };
+
+    const drawSeries = (ctx, series) => {
+      series.forEach(({ cpX, cpY, x2, y2, x0, y0, offset, offset2, radius }) => {
+        const relativeColor = 200 + offset;
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.moveTo(x0, y0);
+        ctx.quadraticCurveTo(cpX, cpY, x2, y2);
+        ctx.strokeStyle = `rgb(${relativeColor}, 78, 243)`;
+        ctx.stroke();
+        ctx.closePath();
+      });
+    }
+
+    // Prepare canvas
     const ctx = canvas.getContext("2d");
     ctx.translate(cx, cy);
-    ctx.rotate(-90 * Math.PI / 180);
+    ctx.rotate((-90 * Math.PI) / 180);
     ctx.translate(-cx, -cy);
-    // Draw line
+
+    // Draw start-line
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(cx + rad, cy);
     ctx.stroke();
     ctx.closePath();
-    // 0 grader
+
+    // Draw neutral circle for 0 degrees
     ctx.beginPath();
     ctx.arc(cx, cy, rad, 0, Math.PI * 2, true);
     ctx.stroke();
     ctx.closePath();
 
-    dataseries.P1D.forEach((step, i, arr) => {
-      const t = (i - 1) * stepLength;
-      const t2 = i * stepLength;
-      const offset =
-        i === 0 ? 0 : arr[i - 1].mean.value;
-      const offset2 = step.mean.value;
-      const x0 = xx(t, offset);
-      const y0 = yy(t, offset);
-      const x1 = xx((t + t2) / 2, offset);
-      const y1 = yy((t + t2) / 2, offset);
-      const x2 = xx(t2, offset2);
-      const y2 = yy(t2, offset2);
-
-      const cpX = 2 * x1 - x0 / 2 - x2 / 2;
-      const cpY = 2 * y1 - y0 / 2 - y2 / 2;
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.moveTo(x0, y0);
-      ctx.quadraticCurveTo(cpX, cpY, x2, y2);
-      ctx.strokeStyle = "hotpink";
-      ctx.stroke();
-      ctx.closePath();
-    });
-    dataseries.P1D.forEach((step, i, arr) => {
-      const t = (i - 1) * stepLength;
-      const t2 = i * stepLength;
-      const offset =
-        i === 0 ? 0 : arr[i - 1].min.value;
-      const offset2 = step.min.value;
-      const x0 = xx(t, offset);
-      const y0 = yy(t, offset);
-      const x1 = xx((t + t2) / 2, offset);
-      const y1 = yy((t + t2) / 2, offset);
-      const x2 = xx(t2, offset2);
-      const y2 = yy(t2, offset2);
-
-      const cpX = 2 * x1 - x0 / 2 - x2 / 2;
-      const cpY = 2 * y1 - y0 / 2 - y2 / 2;
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.moveTo(x0, y0);
-      ctx.quadraticCurveTo(cpX, cpY, x2, y2);
-      ctx.strokeStyle = "blue";
-      ctx.stroke();
-      ctx.closePath();
-    });
-    dataseries.P1D.forEach((step, i, arr) => {
-      const t = (i - 1) * stepLength;
-      const t2 = i * stepLength;
-      const offset =
-        i === 0 ? 0 : arr[i - 1].max.value;
-      const offset2 = step.max.value;
-      const x0 = xx(t, offset);
-      const y0 = yy(t, offset);
-      const x1 = xx((t + t2) / 2, offset);
-      const y1 = yy((t + t2) / 2, offset);
-      const x2 = xx(t2, offset2);
-      const y2 = yy(t2, offset2);
-
-      const cpX = 2 * x1 - x0 / 2 - x2 / 2;
-      const cpY = 2 * y1 - y0 / 2 - y2 / 2;
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.moveTo(x0, y0);
-      ctx.quadraticCurveTo(cpX, cpY, x2, y2);
-      ctx.strokeStyle = "red";
-      ctx.stroke();
-      ctx.closePath();
+    const seriesP1D = generateStepCoords(dataseries.P1D, stepLengthP1D, rad);
+    Object.values(seriesP1D).forEach(val => {
+      drawSeries(ctx, val);
     });
   });
 </script>
@@ -126,11 +115,11 @@
 </style>
 
 <main>
-  <h1>Hello {name}!</h1>
+  <h1>Årshjul</h1>
   <p>
-    Visit the
-    <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
-    to learn how to build Svelte apps.
+    Viser lufttemperatur målt på Blindern
+    <br />
+    Data fra <a href="https://frost.met.no" rel="noopener" target="_blank">frost.met.no</a>
   </p>
   <canvas bind:this={canvas} width="1000" height="1000" />
 </main>
