@@ -36,12 +36,12 @@
       return { cpX, cpY, x2, y2, x0, y0, offset, offset2, radius };
     };
 
-    const generateStepCoords = (dataseries, stepLength, radius) => {
+    const generateStepCoords = (dataseries, stepLength, radius, dataKey) => {
       const maxSeries = [];
       const meanSeries = [];
       const minSeries = [];
 
-      dataseries.forEach((step, i, arr) => {
+      dataseries[dataKey].forEach((step, i, arr) => {
         maxSeries.push(getStepInfo(step, stepLength, i, arr, "max", radius));
         meanSeries.push(getStepInfo(step, stepLength, i, arr, "mean", radius));
         minSeries.push(getStepInfo(step, stepLength, i, arr, "min", radius));
@@ -54,15 +54,17 @@
       };
     };
 
-    const drawSeries = (ctx, series) => {
+    const drawSeries = (ctx, series, extremes) => {
+      const isNegativeMin = extremes.min < 0;
+      const colorScale = isNegativeMin ? extremes.max + Math.abs(extremes.min) : extremes.max - extremes.min;
       series.forEach(
-        ({ cpX, cpY, x2, y2, x0, y0, offset, offset2, radius }) => {
-          const relativeColor = 200 + offset;
-          ctx.beginPath();
-          ctx.lineWidth = 2;
-          ctx.moveTo(x0, y0);
-          ctx.quadraticCurveTo(cpX, cpY, x2, y2);
+        ({ cpX, cpY, x2, y2, x0, y0, offset, offset2, radius }, i) => {
+          const relativeColor = (offset2 + Math.abs(extremes.min) * 255/colorScale);
           ctx.strokeStyle = `rgb(${relativeColor}, 78, 243)`;
+          ctx.beginPath();
+          ctx.lineWidth = 1;
+          i === 0 ? ctx.moveTo(x2, y2) : ctx.moveTo(x0, y0);
+          ctx.quadraticCurveTo(cpX, cpY, x2, y2);
           ctx.stroke();
           ctx.closePath();
         }
@@ -82,16 +84,36 @@
     ctx.stroke();
     ctx.closePath();
 
-    // Draw neutral circle for 0 degrees
+    // Draw neutral circles representing 0 degrees
     ctx.beginPath();
     ctx.arc(cx, cy, rad, 0, Math.PI * 2, true);
+    // ctx.arc(cx, cy, 200, 0, Math.PI * 2, true);
     ctx.stroke();
     ctx.closePath();
 
-    const seriesP1D = generateStepCoords(dataseries.P1D, stepLengthP1D, rad);
+    // Draw daily series
+    const seriesP1D = generateStepCoords(
+      dataseries.P1D,
+      stepLengthP1D,
+      rad,
+      "seriesP1D"
+    );
     Object.values(seriesP1D).forEach(val => {
-      drawSeries(ctx, val);
+      drawSeries(ctx, val, dataseries.P1D.extremes);
     });
+
+    // Draw monthly series
+    // ctx.lineTo(cx, cy);
+    // const seriesP1M = generateStepCoords(
+    //   dataseries.P1M,
+    //   stepLengthP1M,
+    //   200,
+    //   "seriesP1M"
+    // );
+    // console.log(dataseries);
+    // Object.values(seriesP1M).forEach(val => {
+    //   drawSeries(ctx, val, dataseries.P1M.extremes);
+    // });
   });
 </script>
 
