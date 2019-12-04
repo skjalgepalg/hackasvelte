@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   export let dataseries; // P1D, P1M
 
-  let yearRad = Math.PI * 1.5;
+  let yearRad = 0;
   let canvas;
   onMount(() => {
     const rad = canvas.width / 3;
@@ -127,11 +127,19 @@
       frost.met.no
     </a>
   </p>
-  <input
-    type="range"
-    min={0}
-    max={Math.PI * 2}
-    step={Math.PI / 4}
-    bind:value={yearRad} />
-  <canvas bind:this={canvas} width="1000" height="1000" />
+  <div>
+    <label for="start">Slider for årstilpasning</label>
+    <input
+      name="start"
+      type="range"
+      min={0}
+      max={360}
+      step={1}
+      bind:value={yearRad} />
+  </div>
+  <canvas
+    style={`transform: rotate(${yearRad}deg)`}
+    bind:this={canvas}
+    width="1000"
+    height="1000" />
 </main>
