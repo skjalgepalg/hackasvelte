@@ -10,8 +10,6 @@
     const cx = canvas.width / 2;
     const cy = canvas.width / 2;
 
-    const sideCountP1D = dataseries.P1D.length;
-    const sideCountP1M = dataseries.P1M.length;
     const stepLengthP1D = PI2 / 365;
     const stepLengthP1M = PI2 / 12;
 
